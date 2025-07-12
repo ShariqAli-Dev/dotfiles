@@ -632,6 +632,7 @@ require('lazy').setup({
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         eslint = {},
         ts_ls = {},
+        ols = {},
 
         lua_ls = {
           -- cmd = {...},
@@ -729,6 +730,7 @@ require('lazy').setup({
         python = { 'isort', 'black' },
         proto = { 'buf' },
         yaml = { 'prettierd', 'prettier', stop_after_first = true },
+        assembly = { 'asmfmt' },
         -- Conform can also run multiple formatters sequentially
         --
         -- You can use 'stop_after_first' to run the first available formatter from the list
