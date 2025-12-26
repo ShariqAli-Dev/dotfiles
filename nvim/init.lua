@@ -632,7 +632,45 @@ require('lazy').setup({
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         eslint = {},
         ts_ls = {},
-        ols = {},
+        ols = {
+          -- 1.  If you build OLS yourself, uncomment the next line
+          cmd = { '/development/ols/ols' },
+
+          ------------------------------------------------------------------
+          -- 2.  Things OLS needs *during* the initialize handshake
+          ------------------------------------------------------------------
+          init_options = {
+            -- Example from the docs – run style checker in strict mode
+            checker_args = '-strict-style',
+
+            -- Tell OLS about extra collection paths
+            collections = {
+              { name = 'shared', path = vim.fn.expand '$HOME/odin-lib' },
+            },
+          },
+
+          ------------------------------------------------------------------
+          -- 3.  Runtime-tweakable options (can be changed & :LspRestart)
+          ------------------------------------------------------------------
+          settings = {
+            ols = {
+              -- debug = { engine = 'vadimcn.vscode-lldb' }, -- or "ms-vscode.cpptools"
+              prompt = { AskCreateOLS = false }, -- silence ols.json nag
+              trace = { server = 'messages' }, -- "off" | "messages" | "verbose"
+              updates = { askBeforeDownload = false }, -- auto-update quietly
+              -- server  = { path = "/home/shariq/development/ols/ols" }, -- alt binary
+            },
+          },
+        },
+
+        --     MY DEFAULTS
+        --     → ols.debug.engine               default: "auto"
+        -- → ols.prompt.AskCreateOLS        default: true
+        -- ↓ ols.server.path
+        --   No description available.
+        --   type null | string
+        -- → ols.trace.server               default: "off"
+        -- → ols.updates.askBeforeDownload  default: true
 
         lua_ls = {
           -- cmd = {...},
@@ -668,6 +706,7 @@ require('lazy').setup({
         'eslint-lsp',
         'prettierd',
         'markdownlint',
+        'ols',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
